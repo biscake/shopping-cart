@@ -2,8 +2,8 @@ const Button = ({type = "button", content, src = ""}) => {
   return (
     <>
       <button type={type}>
-        {content}
         <img src={src} alt=""/>
+        <span>{content}</span>
       </button>
     </>
   )
