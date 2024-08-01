@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import styles from "./Products.module.css";
 
 const Products = () => {
   const data = useProducts();
@@ -6,11 +7,11 @@ const Products = () => {
 
   if (!data) return "loading";
 
-  if (data) return (
-    <>
+  return (
+    <div className={styles.wrapper}>
       {data.map(product => {
         return (
-          <div key={product.id}>
+          <div key={product.id} className={styles.product}>
             <img src={product.image} alt=""/>
             <h1>{product.title}</h1>
             <p>{product.description}</p>
@@ -20,7 +21,7 @@ const Products = () => {
           </div>
         )
       })}
-    </>
+    </div>
   )
 }
 
