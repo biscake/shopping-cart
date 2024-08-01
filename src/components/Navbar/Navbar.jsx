@@ -5,7 +5,7 @@ import styles from "./Navbar.module.css";
 
 const Navbar = () => {
   return (
-    <div style={styles}>
+    <div className={styles.wrapper}>
       <Button type="button" src={shopImg} content="Shop Now"/>
       <Button type="button" src={shoppingCartImg} content="Shopping Cart"/>
     </div>
