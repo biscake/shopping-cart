@@ -1,8 +1,74 @@
-.product {
-  
+.wrapper {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(450px, 1fr));
+  gap: 1rem;
+}
 
-  img {
-    width: 250px;
-    height: 250px;
+.productWrapper {
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-template-areas: 
+  "image title"
+  "image description"
+  "image price"
+  "rating buy";
+  row-gap: 0.8rem;
+}
+
+.image {
+  grid-area: image;
+  width: 150px;
+  height: 200px;
+  margin-right: 1rem;
+  place-self: center;
+}
+
+.title {
+  grid-area: title;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.description {
+  grid-area: description;
+  font-size: 0.9rem;
+}
+
+.price {
+  grid-area: price;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.rating {
+  grid-area: rating;
+  font-weight: 500;
+  place-self: center;
+}
+
+.buy {
+  grid-area: buy;
+  place-self: center end;
+
+  label {
+    font-weight: 600;
   }
 }
+
+.productButton {
+  background: none;
+  margin-left: 0.5rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  font-weight: 450;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+

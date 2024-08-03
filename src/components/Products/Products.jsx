@@ -1,4 +1,3 @@
-import { useOutletContext } from "react-router-dom";
 import styles from "./Products.module.css";
 import { useProducts, useProductsHandler } from "./ProductsHelper";
 import { useState } from "react";
@@ -22,22 +21,34 @@ const Product = ({ product, addToCart }) => {
 
   const itemId = "item-" + product.id;
   return (
-    <div key={product.id} className={styles.product}>
-      <img src={product.image} alt={product.title}/>
-      <h1>{product.title}</h1>
-      <p>{product.description}</p>
-      <p>${product.price}</p>
-      <p>{"Rating: " + product.rating.rate}</p>
-      <p>{"Count: " + product.rating.count}</p>
-      <label htmlFor={itemId}>Qty: </label>
-      <input type="number" name={itemId} id={itemId} min={0} max={99} value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
-      <button 
-        type="submit" 
-        onClick={(e) => {
-          e.preventDefault();
-          addToCart(product.id, document.querySelector(`#${itemId}`).value)
-        }}
-      >Add to cart</button>
+    <div key={product.id} className={styles.productWrapper}>
+      <img className={styles.image} src={product.image} alt={product.title}/>
+      <h1 className={styles.title}>{product.title}</h1>
+      <p className={styles.description}>{product.description}</p>
+      <p className={styles.price}>${product.price}</p>
+      <p className={styles.rating}>{"Rating: " + product.rating.rate + `/5.0 (${product.rating.count})`}</p>
+      <div className={styles.buy} >
+        <label htmlFor={itemId}>Qty: </label>
+        <input 
+          type="number" 
+          name={itemId} 
+          id={itemId} 
+          min={0} 
+          max={99} 
+          value={quantity} 
+          onChange={(e) => setQuantity(e.target.value)}
+        />
+        <button 
+          className={styles.productButton}
+          type="submit" 
+          onClick={(e) => {
+            e.preventDefault();
+            addToCart(product.id, document.querySelector(`#${itemId}`).value)
+          }}
+        >
+        Add to cart
+        </button>
+      </div>
     </div>
   )
 }

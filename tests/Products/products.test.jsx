@@ -77,12 +77,11 @@ describe("Products page", () => {
         expect(screen.getByText(product.description)).toBeInTheDocument();
         expect(screen.getByAltText(`Product ${product.id}`).src).toContain(`url${product.id}`);
         expect(screen.getByText(`$${product.price}`)).toBeInTheDocument();
-        expect(screen.getByText("Rating: " + product.rating.rate)).toBeInTheDocument();
-        expect(screen.getByText("Count: " + product.rating.count)).toBeInTheDocument();
+        expect(screen.getByText("Rating: " + product.rating.rate + `/5.0 (${product.rating.count})`)).toBeInTheDocument();
       })
     })
 
-    it("Add to cart button should be called when clicked", async () => {
+    it("Add to cart function should be called when clicked", async () => {
         const user = userEvent.setup();
         render(<Products />);
 
@@ -94,9 +93,5 @@ describe("Products page", () => {
         await waitFor(() => expect(mockAddToCart).toHaveBeenCalled(buttons.length));
       }
     )
-  })
-
-  describe("Check button functions correctly", () => {
-    
   })
 })

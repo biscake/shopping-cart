@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import styles from "../Navbar/Navbar.module.css";
 
-const NavBarButton = ({img, className = "", path, title, content}) => {
+const NavBarButton = ({img, className = "", path, title, content, totalQuantity = ""}) => {
   const navigate = useNavigate();
 
   return (
@@ -13,6 +14,7 @@ const NavBarButton = ({img, className = "", path, title, content}) => {
       >
         <img src={img} alt=""/>
         <span>{content}</span>
+        {totalQuantity !== "" && <div className={styles.quantity}>{totalQuantity}</div>}
       </button>
     </div>
   )

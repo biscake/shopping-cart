@@ -7,7 +7,7 @@ const App = () => {
   
   return (
   <>
-    <Navbar />
+    <Navbar cart={cart} />
     <Outlet context={[cart, setCart]}/>
   </>
   )

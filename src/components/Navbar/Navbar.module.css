@@ -26,6 +26,8 @@
   text-decoration: none;
   font-size: 0.8rem;
   color: brown;
+  float: right;
+  margin-bottom: 1rem;
 }
 
 .right {
@@ -34,6 +36,7 @@
 }
 
 .navbutton {
+  position: relative;
   border: none;
   height: 50px;
   cursor: pointer;
@@ -44,10 +47,14 @@
   transition: transform 0.5s ease-out;
   margin: 1rem;
 
-  img {
-    width: 40px;
-    height: 40px;
+  img,
+  .quantity {
     transition: transform 0.5s ease-out;
+  }
+
+  img {
+    width: 45px;
+    height: 45px;
   }
 
   span {
@@ -59,7 +66,8 @@
   }
 
   &:hover {
-    img {
+    img,
+    .quantity {
       transform: translateX(-15px);
     }
 
@@ -69,4 +77,19 @@
       opacity: 1;
     }
   }
+}
+
+.quantity {
+  width: 10px;
+  height: 10px;
+  position: relative;
+  /* top: -20px; */
+  /* border-radius: 50%; */
+  /* border: 1px solid black; */
+  font-weight: 700;
+  font-size: 0.8rem;
+  top: -5px;
+  left: -34px;
+  width: 4ch;
+  text-align: center;
 }
