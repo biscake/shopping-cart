@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Root from './components/Root';
 import Home from './components/Home/Home';
 import { Products } from './components/Products/Products';
 import "./reset.css";
 import "./Global.css"
+import App from './components/App';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <App />,
     children: [
       {
         index: true,
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: <Products onClick={() => console.log("clicked")}/>,
+        element: <Products />,
         // children: [
         //   {
         //     path: "/products/:name",

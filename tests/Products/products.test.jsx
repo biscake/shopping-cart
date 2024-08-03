@@ -2,6 +2,8 @@ import { describe, expect, it, test, vi } from "vitest";
 import { Products } from "../../src/components/Products/Products";
 import { render, screen, waitFor  } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useOutletContext } from "react-router-dom";
+import { useProductsHandler } from "../../src/components/Products/ProductsHelper";
 
 const mockProducts = [
   {
@@ -39,14 +41,31 @@ const mockProducts = [
   }
 ]
 
+const mockAddToCart = vi.fn();
+
+
 vi.mock("../../src/components/Products/ProductsHelper", () => {
-  const useProducts = () => mockProducts;
-  return {useProducts};
+  return {
+    useProducts: () => mockProducts,
+    useProductsHandler: () => {
+      return {
+        addToCart: mockAddToCart
+      }
+    }
+  };
 })
+
+vi.mock("react-router-dom", async (importOriginal) => {
+  return {
+      ...await importOriginal(),
+      useOutletContext: () => [{id:1, price: "5.0"}],
+    }
+})
+
 
 describe("Products page", () => {
   it("Should load products correctly", () => {
-    render(<Products onClick={vi.fn()} />);
+    render(<Products/>);
     mockProducts.forEach((product) => {
       expect(screen.getByText(product.description)).toBeInTheDocument();
       expect(screen.getByAltText(`Product ${product.id}`).src).toContain(`url${product.id}`);
@@ -59,11 +78,14 @@ describe("Products page", () => {
   it("Add to cart button should be called when clicked", async () => {
       const onClick = vi.fn();
       const user = userEvent.setup();
-      render (<Products onClick={onClick} />);
+      render(<Products />);
 
       const buttons = screen.getAllByRole("button", { name: "Add to cart" });
-      await user.click(buttons[0]);
-      expect(onClick).toHaveBeenCalled();
+
+      buttons.forEach(async (button) => {
+        await user.click(button);
+      })
+      await waitFor(() => expect(mockAddToCart).toHaveBeenCalled(buttons.length));
     }
   )
 })
