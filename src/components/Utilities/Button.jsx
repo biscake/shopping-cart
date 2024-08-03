@@ -4,7 +4,7 @@ const NavBarButton = ({img, className = "", path, title, content}) => {
   const navigate = useNavigate();
 
   return (
-    <>
+    <div>
       <button
         type="button"
         className={className}

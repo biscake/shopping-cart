@@ -18,7 +18,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: <Products />,
+        element: <Products onClick={() => console.log("clicked")}/>,
         // children: [
         //   {
         //     path: "/products/:name",
