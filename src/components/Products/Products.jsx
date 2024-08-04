@@ -5,28 +5,59 @@ import { useState } from "react";
 const Products = () => {
   const data = useProducts();
   const { addToCart } = useProductsHandler();
+  const [modalId, setModalId] = useState(null);
+
+  function showModal(id) {
+    setModalId(id);
+  }
+
+  function closeModal() {
+    setModalId(null);
+  }
 
 
   if (!data) return "loading";
 
   return (
-    <div className={styles.wrapper}>
-      {data.map(product => <Product key={product.id} product={product} addToCart={addToCart} />)}
-    </div>
+    <>
+      <div className={styles.wrapper}>
+        {data.map(product => 
+          <Product 
+            key={product.id} 
+            product={product} 
+            addToCart={addToCart} 
+            showModal={showModal} 
+            closeModal={closeModal}
+          />
+        )}
+      </div>
+      {modalId && 
+        <ProductModal
+          closeModal={closeModal}
+          data={data}
+          modalId={modalId}
+        />}
+    </>
   )
 }
 
-const Product = ({ product, addToCart }) => {
+const Product = ({ product, addToCart, showModal, closeModal }) => {
   const [quantity, setQuantity] = useState(0);
+
 
   const itemId = "item-" + product.id;
   return (
     <div key={product.id} className={styles.productWrapper}>
       <img className={styles.image} src={product.image} alt={product.title}/>
       <h1 className={styles.title}>{product.title}</h1>
-      <p className={styles.description}>{product.description}</p>
       <p className={styles.price}>${product.price}</p>
-      <p className={styles.rating}>{"Rating: " + product.rating.rate + `/5.0 (${product.rating.count})`}</p>
+      <button 
+        type="button" 
+        className={styles.viewproduct}
+        onClick={() => showModal(product.id)}
+      >
+        View product
+      </button> 
       <div className={styles.buy} >
         <label htmlFor={itemId}>Qty: </label>
         <input 
@@ -53,10 +84,19 @@ const Product = ({ product, addToCart }) => {
   )
 }
 
+const ProductModal = ({ data, closeModal, modalId }) => {
+  const modaldata = data.find(product => product.id === modalId)
 
-const loader = async () => {
-
+  return (
+    <div className={styles.modal}>
+      <div className={styles.modalContent} >
+        <span>ajlsdjflas</span>
+      </div>
+      testing
+    </div>
+  )
 }
 
 
-export {Products, loader }
+
+export { Products }
