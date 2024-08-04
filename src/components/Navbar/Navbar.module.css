@@ -3,6 +3,8 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px black solid;
+  width: 100%;
+  gap: 30rem;
 }
 
 .home {
@@ -10,7 +12,7 @@
   background: none;
   border: none;
   margin-left: 180px;
-  transition: transform 0.5s ease-out;
+  transition: transform 0.3s ease-out;
   
   img {
     height: 200px;
@@ -84,8 +86,8 @@
   height: 10px;
   position: relative;
   font-weight: 700;
-  font-size: 0.8rem;
-  top: -5.6px;
+  font-size: 0.75rem;
+  top: -5px;
   left: -34px;
   width: 4ch;
   text-align: center;

@@ -4,11 +4,21 @@ import { useState } from "react"
 
 const App = () => {
   const [cart, setCart] = useState([]);
+
+  function addToCart(id, quantity) {
+    if (quantity === 0) return;
+    setCart(
+      [
+        ...cart,
+        {id, quantity}
+      ]
+    )
+  }
   
   return (
   <>
     <Navbar cart={cart} />
-    <Outlet context={[cart, setCart]}/>
+    <Outlet context={[cart, setCart, addToCart]}/>
   </>
   )
 }

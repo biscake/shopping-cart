@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
 
 const useProducts = () => {
   const [data, setData] = useState(null);
@@ -16,27 +15,9 @@ const useProducts = () => {
       })
       .then(json=> setData(json))
       .catch(err => console.error(err))
-    
-    return () => controller.abort();
   }, [])
 
   return data;
 }
 
-function useProductsHandler() {
-  const [cart, setCart] = useOutletContext();
-
-  function addToCart(id, quantity) {
-    console.log(cart)
-    setCart(
-      [
-        ...cart,
-        {id, quantity}
-      ]
-    )
-  }
-
-  return { addToCart }
-}
-
-export { useProducts, useProductsHandler }
+export { useProducts }

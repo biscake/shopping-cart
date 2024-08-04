@@ -1,18 +1,23 @@
+import { useOutletContext } from "react-router-dom";
 import styles from "./Products.module.css";
-import { useProducts, useProductsHandler } from "./ProductsHelper";
+import { useProducts } from "./ProductsHelper";
 import { useState } from "react";
 
 const Products = () => {
-  const data = useProducts();
-  const { addToCart } = useProductsHandler();
+  const [cart, setCart, addToCart] = useOutletContext();
   const [modalId, setModalId] = useState(null);
+
+  const data = useProducts();
 
   function showModal(id) {
     setModalId(id);
   }
 
-  function closeModal() {
-    setModalId(null);
+  function closeModal(elementId) {
+    console.log(elementId)
+    if (elementId === "closeModal" || elementId === "modalBg") {
+      setModalId(null);
+    }
   }
 
 
@@ -36,16 +41,13 @@ const Products = () => {
           closeModal={closeModal}
           data={data}
           modalId={modalId}
+          addToCart={addToCart}
         />}
     </>
   )
 }
 
-const Product = ({ product, addToCart, showModal, closeModal }) => {
-  const [quantity, setQuantity] = useState(0);
-
-
-  const itemId = "item-" + product.id;
+const Product = ({ product, showModal, closeModal }) => {
   return (
     <div key={product.id} className={styles.productWrapper}>
       <img className={styles.image} src={product.image} alt={product.title}/>
@@ -56,43 +58,47 @@ const Product = ({ product, addToCart, showModal, closeModal }) => {
         className={styles.viewproduct}
         onClick={() => showModal(product.id)}
       >
-        View product
+        View product &gt;
       </button> 
-      <div className={styles.buy} >
-        <label htmlFor={itemId}>Qty: </label>
-        <input 
-          type="number" 
-          name={itemId} 
-          id={itemId} 
-          min={0} 
-          max={99} 
-          value={quantity} 
-          onChange={(e) => setQuantity(e.target.value)}
-        />
-        <button 
-          className={styles.productButton}
-          type="submit" 
-          onClick={(e) => {
-            e.preventDefault();
-            addToCart(product.id, document.querySelector(`#${itemId}`).value)
-          }}
-        >
-        Add to cart
-        </button>
-      </div>
+
     </div>
   )
 }
 
-const ProductModal = ({ data, closeModal, modalId }) => {
-  const modaldata = data.find(product => product.id === modalId)
+const ProductModal = ({ data, closeModal, modalId, addToCart }) => {
+  const [quantity, setQuantity] = useState(0);
+  const modalData = data.find(product => product.id === modalId)
 
   return (
-    <div className={styles.modal}>
-      <div className={styles.modalContent} >
-        <span>ajlsdjflas</span>
+    <div className={styles.modal} id="modalBg" onClick={(e) => closeModal(e.target.id)}>
+      <div className={styles.modalContent}>
+        <button className={styles.closeModal} type="button" id="closeModal" onClick={(e) => closeModal(e.target.id)}>X</button> 
+        <img className={styles.image} src={modalData.image} alt={modalData.title}/>
+        <h1 className={styles.title}>{modalData.title}</h1>
+        <p className={styles.description}>{modalData.description}</p>
+        <p className={styles.price}>${modalData.price}</p>
+        <div className={styles.buy} >
+          <label htmlFor="add">Qty: </label>
+          <input 
+            type="number" 
+            name="add" 
+            min={0} 
+            max={99} 
+            value={quantity} 
+            onChange={(e) => setQuantity(e.target.value)}
+          />
+          <button 
+            className={styles.productButton}
+            type="submit" 
+            onClick={(e) => {
+              e.preventDefault();
+              addToCart(modalData.id, quantity)
+            }}
+          >
+          Add to cart
+          </button>
+        </div>
       </div>
-      testing
     </div>
   )
 }
