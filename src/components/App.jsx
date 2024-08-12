@@ -6,13 +6,14 @@ const App = () => {
   const [cart, setCart] = useState([]);
 
   function addToCart(id, quantity) {
-    if (quantity === 0) return;
+    if (quantity === 0) return false;
     setCart(
       [
         ...cart,
         {id, quantity}
       ]
     )
+    return true;
   }
   
   return (
